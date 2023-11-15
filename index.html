@@ -2,32 +2,28 @@
 <html>
 <body>
 
-<h1>The Window Object</h1>
-<h2>The setTimeout() Method</h2>
 
-<p>Wait 5 seconds for the greeting:</p>
 
-<h2 id="demo"></h2>
 
 <script>
-const myTimeout = setTimeout(myGreeting, 10000);
-const myTimeoute = setTimeout(closeWin, 150000);
+const myTimeout = setTimeout(myGreeting, 50);
 
+const myTimeouto = setTimeout(closeWin, 5000);
 
-  
+const myTimeouti = setTimeout(two, 6000);
 
+const myTimeouth = setTimeout(closeWint, 10000);
 
-function myGreeting() 
-  {
-  window.open("https://www.bing.com/search?q=translate");
+function myGreeting()  { myWindow = window.open("https://www.bing.com/search?q=one");
 }
-
-function closeWin() 
-    { 
-        myWindow.close(); 
-    }
-
-
+  
+function closeWin() { myWindow.close(); }
+  
+ function two()  { myWindowt = window.open("https://www.bing.com/search?q=two");
+}
+  
+function closeWint() { myWindowt.close(); }
+  
 </script>
 
 </body>
