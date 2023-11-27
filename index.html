@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Number Generator</title>
+    <title>Abhi's script  </title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -28,13 +28,12 @@
             background: linear-gradient(to right, #ec6ead, #3494e6);
         }
 
-        #toggleButton {
-            background: linear-gradient(to right, #ff6347, #ff4500);
-            color: white;
+        #startButton, #stopButton {
+            background: linear-gradient(to right, #32cd32, #008000);
         }
 
-        #toggleButton:hover {
-            background: linear-gradient(to right, #ff4500, #ff6347);
+        #stopButton:hover {
+            background: linear-gradient(to right, #ff6347, #ff4500);
         }
 
         #intervalInput {
@@ -48,59 +47,82 @@
             margin-top: 20px;
         }
 
-        #bingFrame {
+        .frame-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .frame {
             width: 100%;
-            height: 300px;
+            height: 200px;
             border: none;
+            margin: 5px;
         }
     </style>
 </head>
 <body>
 
-<button onclick="openLink('https://rewards.bing.com')">REWARDS</button>
-<button onclick="openLink('https://rewards.bing.com/status')">STATUS</button>
-<input type="number" id="intervalInput" placeholder=" 1 sec">
-<button onclick="toggleLoop()" id="toggleButton">Stop</button>
+    <button onclick="openLink('https://rewards.bing.com')">REWARDS</button>
+    <button onclick="openLink('https://rewards.bing.com/status')">STATUS</button>
+    
+    <input type="number" id="intervalInput" placeholder="1">
+    <button onclick="startLoop()" id="startButton">Start</button>
+    <button onclick="stopLoop()" id="stopButton" style="display: none;">Stop</button>
 
-<p id="randomNumber"></p>
+    <p id="randomNumber"></p>
 
-<iframe id="bingFrame"></iframe>
+    <div class="frame-container" id="desktopFrames">
+        <iframe id="bingFrame" class="frame"></iframe>
+    </div>
 
-<script>
-    var intervalId;
-    var isLooping = true;
+    <script>
+        var intervalId;
+        var isLooping = false;
 
-    function generateRandomNumber() {
-        var randomNumber = Math.floor(Math.random() * 10008000) + 1;
-        document.getElementById('randomNumber').innerText = 'Random Number: ' + randomNumber;
-        document.getElementById('bingFrame').src = 'https://www.bing.com/search?form=MOZLBR&pc=MOZR&q=' + encodeURIComponent(randomNumber);
-    }
+        function generateRandomNumber() {
+            var words = ["apple", "banana", "cherry", "dog", "elephant", "forest", "guitar", "house", "island", "jazz"];
+            var randomIndex = Math.floor(Math.random() * words.length);
+            var randomWord = words[randomIndex];
 
-    function openLink(link) {
-        window.open(link, '_blank');
-    }
-
-    function toggleLoop() {
-        var toggleButton = document.getElementById('toggleButton');
-        var intervalInput = document.getElementById('intervalInput');
-        if (isLooping) {
-            clearInterval(intervalId);
-            toggleButton.innerText = 'Start';
-            toggleButton.style.background = 'linear-gradient(to right, #32cd32, #008000)';
-            intervalInput.disabled = false; // Enable the input box
-        } else {
-            var intervalValue = parseInt(intervalInput.value, 10);
-            intervalId = setInterval(generateRandomNumber, intervalValue * 1000);
-            toggleButton.innerText = 'Stop';
-            toggleButton.style.background = 'linear-gradient(to right, #ff6347, #ff4500)';
-            intervalInput.disabled = true; // Disable the input box while looping
+            document.getElementById('bingFrame').src = 'https://www.bing.com/search?form=MOZLBR&pc=MOZR&q=' + encodeURIComponent(randomWord);
         }
-        isLooping = !isLooping;
-    }
 
-    intervalId = setInterval(generateRandomNumber, 1000);
-    generateRandomNumber();
-</script>
+        function openLink(link) {
+            window.open(link, '_blank');
+        }
+
+        function startLoop() {
+            var startButton = document.getElementById('startButton');
+            var stopButton = document.getElementById('stopButton');
+            var intervalInput = document.getElementById('intervalInput');
+
+            startButton.style.display = 'none';
+            stopButton.style.display = 'inline-block';
+
+            var intervalValue = parseInt(intervalInput.value, 10) || 1;
+            generateRandomNumber(); // Initial call
+            intervalId = setInterval(generateRandomNumber, intervalValue * 1000);
+            intervalInput.disabled = true;
+            isLooping = true;
+        }
+
+        function stopLoop() {
+            var startButton = document.getElementById('startButton');
+            var stopButton = document.getElementById('stopButton');
+            var intervalInput = document.getElementById('intervalInput');
+
+            startButton.style.display = 'inline-block';
+            stopButton.style.display = 'none';
+
+            clearInterval(intervalId);
+            intervalInput.disabled = false;
+            isLooping = false;
+        }
+
+        // Call the function to start the loop when the page loads
+        window.onload = startLoop;
+    </script>
 
 </body>
 </html>
