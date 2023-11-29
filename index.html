@@ -76,7 +76,7 @@
     <button onclick="openLink('https://rewards.bing.com/status')">STATUS</button>
     <button onclick="openLinkSameWindow('https://abhishekkumar25122512.github.io/bing-rewards25122005abhi/')">Re-Start</button>
 
-    <input type="number" id="intervalInput" placeholder=" 1 sec">
+   
     <button onclick="toggleLoop()" id="toggleButton">Stop</button>
 
     <p id="randomNumber"></p>
@@ -89,7 +89,7 @@
         var intervalId;
         var isLooping = true;
         var searchCounter = 0;
-        var maxSearches = 40;
+        var maxSearches = 31;
 
         function generateRandomNumber() {
             if (searchCounter < maxSearches) {
@@ -123,7 +123,7 @@
                 intervalInput.disabled = false; // Enable the input box
             } else {
                 var intervalValue = parseInt(intervalInput.value, 10);
-                intervalId = setInterval(generateRandomNumber, intervalValue * 1000);
+                intervalId = setInterval(generateRandomNumber, 7000);
                 toggleButton.innerText = 'Stop';
                 toggleButton.style.background = 'linear-gradient(to right, #ff6347, #ff4500)';
                 intervalInput.disabled = true; // Disable the input box while looping
